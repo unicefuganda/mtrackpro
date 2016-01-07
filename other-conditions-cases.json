@@ -1,0 +1,398 @@
+{
+  "version": 8, 
+  "flows": [
+    {
+      "base_language": "ang", 
+      "action_sets": [
+        {
+          "y": 456, 
+          "x": 732, 
+          "destination": null, 
+          "uuid": "220ab725-3954-4cc4-9369-e9fdcb2bef80", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.first_condition_cases @flow.first_condition_name. If there is an error, please resend."
+              }, 
+              "type": "reply"
+            }
+          ]
+        }, 
+        {
+          "y": 173, 
+          "x": 759, 
+          "destination": null, 
+          "uuid": "0d043014-bf22-4283-8776-3eb7747473ca", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "There is an error in your EPC report. please resend it."
+              }, 
+              "type": "reply"
+            }
+          ]
+        }, 
+        {
+          "y": 767, 
+          "x": 732, 
+          "destination": null, 
+          "uuid": "503240cb-31de-4a5f-bace-7f2869c45107", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.first_condition_cases @flow.first_condition_name and @flow.second_condition_cases @flow.second_condition_name. If there is an error, please resend."
+              }, 
+              "type": "reply"
+            }
+          ]
+        }, 
+        {
+          "y": 1079, 
+          "x": 422, 
+          "destination": null, 
+          "uuid": "ddf3b3f2-bed0-49c8-9b37-f3af8833f826", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.first_condition_cases @flow.first_condition_name,  @flow.second_condition_cases @flow.second_condition_name and @flow.third_condition_cases @flow.third_condition_name. If there is an error, please resend."
+              }, 
+              "type": "reply"
+            }, 
+            {
+              "action": "POST", 
+              "type": "api", 
+              "webhook": "http://localhost:9090/dhis2queue?form=epc"
+            }
+          ]
+        }
+      ], 
+      "version": 8, 
+      "flow_type": "F", 
+      "entry": "01b71dea-7021-45eb-bf64-28d78d6c056e", 
+      "rule_sets": [
+        {
+          "uuid": "01b71dea-7021-45eb-bf64-28d78d6c056e", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "1918b162-30f6-4a41-8618-8e09ad7a2908", 
+              "uuid": "3bc8c98a-0021-4126-a31b-c783116dd5f4", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "wait_message", 
+          "label": "Submission", 
+          "operand": "@step.value", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 0, 
+          "x": 455, 
+          "config": {}
+        }, 
+        {
+          "uuid": "1918b162-30f6-4a41-8618-8e09ad7a2908", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "de4fc114-1285-4feb-96b2-92500765e132", 
+              "uuid": "d752c98a-7ac8-4eb4-80f0-1c7c6b1a7922", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "expression", 
+          "label": "Fields", 
+          "operand": "@(REMOVE_FIRST_WORD(step.value ))", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 106, 
+          "x": 461, 
+          "config": {}
+        }, 
+        {
+          "uuid": "de4fc114-1285-4feb-96b2-92500765e132", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": {}, 
+                "type": "not_empty"
+              }, 
+              "category": {
+                "ang": "Name of 1st condition"
+              }, 
+              "destination": "cbb94eec-03e1-4bfd-abe2-f1e6451756e1", 
+              "uuid": "e029839f-6e72-4883-806d-5b8d1aafddd6", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "0d043014-bf22-4283-8776-3eb7747473ca", 
+              "uuid": "204a74a8-5c9a-4980-a77a-b94d4a2c2cb2", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "first_condition_name", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 234, 
+          "x": 464, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 0
+          }
+        }, 
+        {
+          "uuid": "cbb94eec-03e1-4bfd-abe2-f1e6451756e1", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "1st condition cases"
+              }, 
+              "destination": "7c943048-a25e-4cda-82b5-92feb4f9d503", 
+              "uuid": "7c78d942-0f0f-4294-afeb-ba220e21ead4", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "0d043014-bf22-4283-8776-3eb7747473ca", 
+              "uuid": "c36a6168-7cb6-45de-8257-a025acc1da5e", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "first_condition_cases", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 350, 
+          "x": 447, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 1
+          }
+        }, 
+        {
+          "uuid": "7c943048-a25e-4cda-82b5-92feb4f9d503", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": {}, 
+                "type": "not_empty"
+              }, 
+              "category": {
+                "ang": "Name of 2nd Condition"
+              }, 
+              "destination": "5c7829d3-4e97-48fa-ae56-3629374cedc6", 
+              "uuid": "8f9c8d2b-f37c-43ff-8178-9f6399d4b509", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "220ab725-3954-4cc4-9369-e9fdcb2bef80", 
+              "uuid": "b4616155-a4e2-410f-a3d2-469657577b13", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "second_condition_name", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 511, 
+          "x": 423, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 2
+          }
+        }, 
+        {
+          "uuid": "5c7829d3-4e97-48fa-ae56-3629374cedc6", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "2nd condition cases"
+              }, 
+              "destination": "da3b20ec-cdcc-4340-86d4-80a35fc337da", 
+              "uuid": "8418ac17-39cb-4f6d-b58f-05cc030143dd", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "220ab725-3954-4cc4-9369-e9fdcb2bef80", 
+              "uuid": "9dbb2eb4-5e37-4e71-9455-105dde8200fa", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "second_condition_cases", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 649, 
+          "x": 431, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 3
+          }
+        }, 
+        {
+          "uuid": "da3b20ec-cdcc-4340-86d4-80a35fc337da", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": {}, 
+                "type": "not_empty"
+              }, 
+              "category": {
+                "ang": "Name of 3rd Condition"
+              }, 
+              "destination": "4e7015be-053e-479c-af4d-bb329db00c6b", 
+              "uuid": "859e9489-75b3-4439-b65a-338a360e1a49", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "503240cb-31de-4a5f-bace-7f2869c45107", 
+              "uuid": "8a54a6f5-b46e-470c-8652-d4295caa7f7c", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "third_condition_name", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 783, 
+          "x": 434, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 4
+          }
+        }, 
+        {
+          "uuid": "4e7015be-053e-479c-af4d-bb329db00c6b", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "3rd Condition Cases"
+              }, 
+              "destination": "ddf3b3f2-bed0-49c8-9b37-f3af8833f826", 
+              "uuid": "882264c9-eb37-4d40-ae9b-7461beb11acf", 
+              "destination_type": "A"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "503240cb-31de-4a5f-bace-7f2869c45107", 
+              "uuid": "fd6fcb66-ad5c-4895-b1cc-82f0de85d0b7", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "third_condition_cases", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 915, 
+          "x": 438, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 5
+          }
+        }
+      ], 
+      "metadata": {
+        "expires": 0, 
+        "revision": 36, 
+        "id": 9, 
+        "name": "Other Conditions - Cases", 
+        "saved_on": "2015-12-29T16:06:51.433438Z"
+      }
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "Other Conditions - Cases", 
+        "id": 9
+      }, 
+      "groups": [], 
+      "keyword": "epc", 
+      "channel": null
+    }
+  ]
+}

@@ -1,0 +1,520 @@
+{
+  "version": 8, 
+  "flows": [
+    {
+      "base_language": "ang", 
+      "action_sets": [
+        {
+          "y": 1305, 
+          "x": 394, 
+          "destination": null, 
+          "uuid": "ca6be49d-2725-4185-9119-5478f55c5b83", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.suspected_malaria @flow.suspected_malaria.category, @flow.rdt_tested @flow.rdt_tested.category, @flow.rdt_positive @flow.rdt_positive.category, @flow.microscopy_tested @flow.microscopy_tested.category, @flow.microscopy_positive @flow.microscopy_positive.category, @flow.not_tested_treated @flow.not_tested_treated.category, @flow.rdt_neg_treated @flow.rdt_neg_treated.category, @flow.rdt_pos_treated @flow.rdt_pos_treated.category, @flow.microscopy_neg_treated @flow.microscopy_neg_treated.category and @flow.microscopy_pos_treated @flow.microscopy_pos_treated.category. If there's an error please resend."
+              }, 
+              "type": "reply"
+            }, 
+            {
+              "action": "POST", 
+              "type": "api", 
+              "webhook": "http://localhost:9090/dhis2queue?form=mat"
+            }
+          ]
+        }, 
+        {
+          "y": 145, 
+          "x": 784, 
+          "destination": null, 
+          "uuid": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "There is an error in your MAT report. Please resend a correct one."
+              }, 
+              "type": "reply"
+            }
+          ]
+        }
+      ], 
+      "version": 8, 
+      "flow_type": "F", 
+      "entry": "0138e2a5-c0dc-400f-90ad-e5fd224a4430", 
+      "rule_sets": [
+        {
+          "uuid": "0138e2a5-c0dc-400f-90ad-e5fd224a4430", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "6e753c19-fd7e-4289-9710-73856fe41e62", 
+              "uuid": "ec392cf3-5075-450a-916c-ba7ab87ef7df", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "wait_message", 
+          "label": "Submission", 
+          "operand": "@step.value", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 0, 
+          "x": 417, 
+          "config": {}
+        }, 
+        {
+          "uuid": "6e753c19-fd7e-4289-9710-73856fe41e62", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "40a776e7-76c8-498c-b853-2a87528ccd46", 
+              "uuid": "3fc13752-1b11-4e9e-911b-186679ab0936", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "expression", 
+          "label": "Fields", 
+          "operand": "@(REMOVE_FIRST_WORD(step.value ))", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 92, 
+          "x": 417, 
+          "config": {}
+        }, 
+        {
+          "uuid": "40a776e7-76c8-498c-b853-2a87528ccd46", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "Suspected Malaria (fever)"
+              }, 
+              "destination": "ebb666db-e1d1-47df-8c1c-b47510b1d85b", 
+              "uuid": "78b01f86-5233-4e77-85d7-7a78751c9095", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "f3b8ce55-f97c-452c-9049-a69cab686dd6", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "suspected_malaria", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 198, 
+          "x": 414, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 0
+          }
+        }, 
+        {
+          "uuid": "ebb666db-e1d1-47df-8c1c-b47510b1d85b", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "RDT Tested"
+              }, 
+              "destination": "7332325e-fb99-4f7f-aef0-6ef2447d066c", 
+              "uuid": "dbcc94fb-90d0-4b31-927f-380208e1ad03", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "04335211-d397-47ab-9052-59fe42054788", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "rdt_tested", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 307, 
+          "x": 411, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 1
+          }
+        }, 
+        {
+          "uuid": "7332325e-fb99-4f7f-aef0-6ef2447d066c", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "RDT possitive"
+              }, 
+              "destination": "a23b7121-8b85-4bf8-b9f3-b27577a6c52a", 
+              "uuid": "c85bc4b3-fb92-4d3b-9300-484d1e680923", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "fe4a2653-cef1-476c-83e0-5bd2e0cd1ce6", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "rdt_positive", 
+          "operand": "@flow.submission", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 394, 
+          "x": 404, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 2
+          }
+        }, 
+        {
+          "uuid": "a23b7121-8b85-4bf8-b9f3-b27577a6c52a", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "Microscopy Tested"
+              }, 
+              "destination": "599fe6af-353b-44e0-ad0d-10d49f8f4085", 
+              "uuid": "4e57982e-a96f-48c4-a146-a5348c6ca416", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "5b79368a-3a09-4501-a130-33eb45b9a19c", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "microscopy_tested", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 511, 
+          "x": 406, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 3
+          }
+        }, 
+        {
+          "uuid": "599fe6af-353b-44e0-ad0d-10d49f8f4085", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "Microscopy positive"
+              }, 
+              "destination": "da1f404c-3230-441a-b30b-f05f4dc5e805", 
+              "uuid": "64636708-8d44-4feb-8e4c-2c0f849e40d1", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "f5a4b5ed-28e1-4998-8d87-f38e66f25dba", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "microscopy_positive", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 610, 
+          "x": 403, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 4
+          }
+        }, 
+        {
+          "uuid": "da1f404c-3230-441a-b30b-f05f4dc5e805", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "Not tested cases treated"
+              }, 
+              "destination": "ba29c089-5de6-4e13-b652-189656680b62", 
+              "uuid": "bda61bb5-0959-48b8-b8d3-2ba27d42ae2d", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "56625b98-10ec-499a-ba33-951ae605020c", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "not_tested_treated", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 721, 
+          "x": 399, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 5
+          }
+        }, 
+        {
+          "uuid": "ba29c089-5de6-4e13-b652-189656680b62", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "RDT Negative treated"
+              }, 
+              "destination": "c3416dcf-e038-436e-9c42-a983db140027", 
+              "uuid": "5dd11c40-1ecc-4bdd-a745-a2f68bc9e178", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "9f82dfa6-6852-4264-94d4-b2d061cf8c78", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "rdt_neg_treated", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 830, 
+          "x": 405, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 6
+          }
+        }, 
+        {
+          "uuid": "c3416dcf-e038-436e-9c42-a983db140027", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "RDT positive treated"
+              }, 
+              "destination": "5f33b078-1f50-49d5-80e2-e264431e7b4c", 
+              "uuid": "64126723-4b74-4a7d-9de4-a3aef50cf3ca", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "0b0a45f6-ff54-4b97-becb-740e438d876a", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "rdt_pos_treated", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 935, 
+          "x": 405, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 7
+          }
+        }, 
+        {
+          "uuid": "5f33b078-1f50-49d5-80e2-e264431e7b4c", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "Microscopy negative treated"
+              }, 
+              "destination": "dc98477e-93ba-475c-8d9d-ff60b7f0ee62", 
+              "uuid": "e67e8955-c691-4543-98a3-2efdd93d63b8", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "51ce0bba-a880-441e-84fb-b1041683f0c1", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "microscopy_neg_treated", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 1058, 
+          "x": 406, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 8
+          }
+        }, 
+        {
+          "uuid": "dc98477e-93ba-475c-8d9d-ff60b7f0ee62", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "Microscopy positive treated"
+              }, 
+              "destination": "ca6be49d-2725-4185-9119-5478f55c5b83", 
+              "uuid": "577abe4d-18b8-4f08-8ad6-8fddbedc8987", 
+              "destination_type": "A"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "2d8bd2cf-7ace-4d16-8ba7-2ea49af2cf7c", 
+              "uuid": "d13f1392-45d1-4eb8-89f5-6c9076c420a0", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "microscopy_pos_treated", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 1178, 
+          "x": 394, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 9
+          }
+        }
+      ], 
+      "metadata": {
+        "expires": 10080, 
+        "revision": 51, 
+        "id": 7, 
+        "name": "Summary Of Malaria Cases Treated and Tested", 
+        "saved_on": "2015-12-29T16:09:37.615638Z"
+      }
+    }
+  ], 
+  "triggers": []
+}

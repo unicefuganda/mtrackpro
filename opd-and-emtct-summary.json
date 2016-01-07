@@ -1,0 +1,285 @@
+{
+  "version": 8, 
+  "flows": [
+    {
+      "base_language": "ang", 
+      "action_sets": [
+        {
+          "y": 725, 
+          "x": 429, 
+          "destination": null, 
+          "uuid": "bc53f6ab-ed8b-442e-8db1-17eb9f7024bc", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.opd_new_attendees @flow.opd_new_attendees.category, @flow.opd_total_attendence @flow.opd_total_attendence.category, @flow.mothers_on_appt @flow.mothers_on_appt.category and @flow.missed_appts @flow.missed_appts.category. If there's an error please resend."
+              }, 
+              "type": "reply"
+            }, 
+            {
+              "action": "POST", 
+              "type": "api", 
+              "webhook": "http://localhost:9090/dhis2queue?form=apt"
+            }
+          ]
+        }, 
+        {
+          "y": 157, 
+          "x": 839, 
+          "destination": null, 
+          "uuid": "7885e1d4-8c90-4559-99ec-0c1102898aa3", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You have and error with your APT report. Please resend it."
+              }, 
+              "type": "reply"
+            }
+          ]
+        }
+      ], 
+      "version": 8, 
+      "flow_type": "F", 
+      "entry": "dd265420-428f-476a-b865-7074eedcce93", 
+      "rule_sets": [
+        {
+          "uuid": "dd265420-428f-476a-b865-7074eedcce93", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "f06c4172-37f9-4f98-8104-28f9f9fa3377", 
+              "uuid": "48b69de6-6c56-43f5-ae18-f9c7cc06dc17", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "wait_message", 
+          "label": "Submission", 
+          "operand": "@step.value", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 0, 
+          "x": 430, 
+          "config": {}
+        }, 
+        {
+          "uuid": "f06c4172-37f9-4f98-8104-28f9f9fa3377", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "1a53de83-efd9-4f0e-8f86-38b01ebf3661", 
+              "uuid": "80fe521a-5eec-4484-acb6-468cdfa25816", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "expression", 
+          "label": "Fields", 
+          "operand": "@(REMOVE_FIRST_WORD(step.value ))", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 118, 
+          "x": 424, 
+          "config": {}
+        }, 
+        {
+          "uuid": "1a53de83-efd9-4f0e-8f86-38b01ebf3661", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "OPD New Attendees"
+              }, 
+              "destination": "31ab962e-ad2e-43ab-b4ba-ec699bb5bc61", 
+              "uuid": "ddb1eda9-a176-4032-a69d-fc93fdbe1a3a", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "7885e1d4-8c90-4559-99ec-0c1102898aa3", 
+              "uuid": "80ef18de-a7e0-4994-8970-52800cf332a1", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "opd_new_attendees", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 259, 
+          "x": 426, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 0
+          }
+        }, 
+        {
+          "uuid": "31ab962e-ad2e-43ab-b4ba-ec699bb5bc61", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "OPD Total Attendance"
+              }, 
+              "destination": "5c599b87-f729-4dc6-8465-59344a25cc45", 
+              "uuid": "77566759-2cfc-48f0-91f9-be4bc9d146f4", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "7885e1d4-8c90-4559-99ec-0c1102898aa3", 
+              "uuid": "a200a384-73a0-415d-b3bf-0707210c8329", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "opd_total_attendence", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 365, 
+          "x": 427, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 1
+          }
+        }, 
+        {
+          "uuid": "5c599b87-f729-4dc6-8465-59344a25cc45", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "Expected eMTCT mothers on appt"
+              }, 
+              "destination": "a586e626-2188-4f0b-8004-8f0454fa7520", 
+              "uuid": "0258683b-8b49-4379-8378-f31fdc165544", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "7885e1d4-8c90-4559-99ec-0c1102898aa3", 
+              "uuid": "9dc8a20a-7e81-459b-85dd-697d4eedb767", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "mothers_on_appt", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 479, 
+          "x": 423, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 2
+          }
+        }, 
+        {
+          "uuid": "a586e626-2188-4f0b-8004-8f0454fa7520", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "eMTCT missed appointments"
+              }, 
+              "destination": "bc53f6ab-ed8b-442e-8db1-17eb9f7024bc", 
+              "uuid": "7a5f729b-eda0-48e1-938a-e014ac52d501", 
+              "destination_type": "A"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "7885e1d4-8c90-4559-99ec-0c1102898aa3", 
+              "uuid": "b6af33cf-7075-4ef7-bad6-2e7080672bb3", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "missed_appts", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 602, 
+          "x": 423, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 3
+          }
+        }
+      ], 
+      "metadata": {
+        "expires": 0, 
+        "revision": 23, 
+        "id": 8, 
+        "name": "OPD and eMTCT Summary", 
+        "saved_on": "2015-12-29T16:08:43.231172Z"
+      }
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "OPD and eMTCT Summary", 
+        "id": 8
+      }, 
+      "groups": [], 
+      "keyword": "apt", 
+      "channel": null
+    }
+  ]
+}

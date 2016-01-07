@@ -1,0 +1,244 @@
+{
+  "version": 8, 
+  "flows": [
+    {
+      "base_language": "ang", 
+      "action_sets": [
+        {
+          "y": 100, 
+          "x": 786, 
+          "destination": null, 
+          "uuid": "50cc6232-5b04-4167-afd6-76e2542c7671", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "Your report has errors. Please resend"
+              }, 
+              "type": "reply"
+            }
+          ]
+        }, 
+        {
+          "y": 639, 
+          "x": 314, 
+          "destination": null, 
+          "uuid": "fd31ff3a-e0fb-4b40-a793-24d86dc352b1", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.hiv_screening_test_kits @flow.hiv_screening_test_kits.category, @flow.arvs @flow.arvs.category and @flow.nevirapine @flow.nevirapine.category. If there's an error please resend"
+              }, 
+              "type": "reply"
+            }, 
+            {
+              "action": "POST", 
+              "type": "api", 
+              "webhook": "http://localhost:9090/dhis2queue?form=arv"
+            }
+          ]
+        }
+      ], 
+      "version": 8, 
+      "flow_type": "F", 
+      "entry": "1840428b-67fe-44a1-8ddb-f5d6e85f4807", 
+      "rule_sets": [
+        {
+          "uuid": "1840428b-67fe-44a1-8ddb-f5d6e85f4807", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "5b271de8-4e67-4555-96ea-4c37fa68b4f4", 
+              "uuid": "a583df0a-e2cb-4c56-b0af-3b89734ed2d3", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "wait_message", 
+          "label": "submission", 
+          "operand": "@step.value", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 0, 
+          "x": 364, 
+          "config": {}
+        }, 
+        {
+          "uuid": "5b271de8-4e67-4555-96ea-4c37fa68b4f4", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "44f14787-f820-4a7b-838e-8f34b05ee86a", 
+              "uuid": "38669558-9b00-4df8-b692-f9b72a448ad9", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "expression", 
+          "label": "Fields", 
+          "operand": "@(REMOVE_FIRST_WORD(step.value ))", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 88, 
+          "x": 362, 
+          "config": {}
+        }, 
+        {
+          "uuid": "44f14787-f820-4a7b-838e-8f34b05ee86a", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "HIV Screening Test Kits"
+              }, 
+              "destination": "87402412-618c-4b18-aee4-0d705710a52a", 
+              "uuid": "4a308697-5ddb-412e-94c9-c8c6137b7f6e", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "50cc6232-5b04-4167-afd6-76e2542c7671", 
+              "uuid": "65b29a7b-5e51-423a-b7e8-8ca7f637ef22", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "hiv_screening_test_kits", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 202, 
+          "x": 358, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 0
+          }
+        }, 
+        {
+          "uuid": "87402412-618c-4b18-aee4-0d705710a52a", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "ARVs (Fixed - DC eMTCT )"
+              }, 
+              "destination": "3462a956-852b-40b8-b456-21cfbe2c60d8", 
+              "uuid": "f17288c8-5f98-421f-9c90-0b95e05c1445", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "50cc6232-5b04-4167-afd6-76e2542c7671", 
+              "uuid": "793d1854-abfc-46a1-b259-547177f229b1", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "arvs", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 343, 
+          "x": 367, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 1
+          }
+        }, 
+        {
+          "uuid": "3462a956-852b-40b8-b456-21cfbe2c60d8", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "Nevirapine Therapy"
+              }, 
+              "destination": "fd31ff3a-e0fb-4b40-a793-24d86dc352b1", 
+              "uuid": "02017f48-9490-4fe6-86e4-dee087a01a46", 
+              "destination_type": "A"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "50cc6232-5b04-4167-afd6-76e2542c7671", 
+              "uuid": "3b510fe9-141c-49a1-b703-cb766a9e20bf", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "nevirapine", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 476, 
+          "x": 370, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 2
+          }
+        }
+      ], 
+      "metadata": {
+        "expires": 0, 
+        "revision": 49, 
+        "id": 5, 
+        "name": "HIV Testing Kits & eMTCT Drugs - Stock Balance ", 
+        "saved_on": "2015-12-29T16:11:37.276270Z"
+      }
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "HIV Testing Kits & eMTCT Drugs - Stock Balance ", 
+        "id": 5
+      }, 
+      "groups": [], 
+      "keyword": "arv", 
+      "channel": null
+    }
+  ]
+}

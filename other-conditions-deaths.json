@@ -1,0 +1,398 @@
+{
+  "version": 8, 
+  "flows": [
+    {
+      "base_language": "ang", 
+      "action_sets": [
+        {
+          "y": 161, 
+          "x": 815, 
+          "destination": null, 
+          "uuid": "f23bc300-7396-489f-a144-e5c93248941b", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "There's an error with your EPC report. Please resend."
+              }, 
+              "type": "reply"
+            }
+          ]
+        }, 
+        {
+          "y": 477, 
+          "x": 781, 
+          "destination": null, 
+          "uuid": "7bf19927-7bfe-4811-9b56-1de4330a74e4", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.first_condition_deaths @flow.first_condition_name deaths. If there's an error please resend."
+              }, 
+              "type": "reply"
+            }
+          ]
+        }, 
+        {
+          "y": 690, 
+          "x": 789, 
+          "destination": null, 
+          "uuid": "56e1f49d-6c34-4425-9a59-9bee39d355c0", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.first_condition_deaths @flow.first_condition_name, @flow.second_condition_deaths @flow.second_condition_name. If there's an error please resend."
+              }, 
+              "type": "reply"
+            }
+          ]
+        }, 
+        {
+          "y": 1032, 
+          "x": 476, 
+          "destination": null, 
+          "uuid": "90d14a80-134a-4b58-9e2b-3560fbcaee7e", 
+          "actions": [
+            {
+              "msg": {
+                "ang": "You reported @flow.first_condition_deaths @flow.first_condition_name deaths, @flow.second_condition_deaths @flow.second_condition_name deaths and @flow.third_condition_deaths @flow.third_condition_name deaths. If there's an error please resend."
+              }, 
+              "type": "reply"
+            }, 
+            {
+              "action": "POST", 
+              "type": "api", 
+              "webhook": "http://localhost:9090/dhis2queue?form=epd"
+            }
+          ]
+        }
+      ], 
+      "version": 8, 
+      "flow_type": "F", 
+      "entry": "42fd6187-d92b-49ed-a7b9-17ec182883ac", 
+      "rule_sets": [
+        {
+          "uuid": "42fd6187-d92b-49ed-a7b9-17ec182883ac", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "effb169e-fa0f-4e63-8d2c-ab0a98b44d80", 
+              "uuid": "b7c2353c-1da3-4e5e-9bef-721933c5e83a", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "wait_message", 
+          "label": "Submission", 
+          "operand": "@step.value", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 0, 
+          "x": 475, 
+          "config": {}
+        }, 
+        {
+          "uuid": "effb169e-fa0f-4e63-8d2c-ab0a98b44d80", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "All Responses"
+              }, 
+              "destination": "d25a4234-b1e7-4621-8989-7b3194417cde", 
+              "uuid": "a5c42c11-7730-43da-9c3c-06c321112a48", 
+              "destination_type": "R"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "expression", 
+          "label": "Fields", 
+          "operand": "@(REMOVE_FIRST_WORD(step.value ))", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 116, 
+          "x": 477, 
+          "config": {}
+        }, 
+        {
+          "uuid": "d25a4234-b1e7-4621-8989-7b3194417cde", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": {}, 
+                "type": "not_empty"
+              }, 
+              "category": {
+                "ang": "Name of 1st Condition"
+              }, 
+              "destination": "97e72a35-a949-419e-9e11-1a170f8c29aa", 
+              "uuid": "810963ac-2fd4-4e19-9ccb-2b4b0c9897d3", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "f23bc300-7396-489f-a144-e5c93248941b", 
+              "uuid": "32eaabd2-0910-489e-8434-ee69ced874e0", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "first_condition_name", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 238, 
+          "x": 483, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 0
+          }
+        }, 
+        {
+          "uuid": "97e72a35-a949-419e-9e11-1a170f8c29aa", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "1st Condition Deaths"
+              }, 
+              "destination": "8cd4d84e-a48e-4c27-a14e-1b3b853fba5b", 
+              "uuid": "693d1658-a7e0-4dd3-a370-19dc7f533f7e", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "f23bc300-7396-489f-a144-e5c93248941b", 
+              "uuid": "b0b444f7-c406-485e-9b00-68accd9eff73", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "first_condition_deaths", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 353, 
+          "x": 488, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 1
+          }
+        }, 
+        {
+          "uuid": "8cd4d84e-a48e-4c27-a14e-1b3b853fba5b", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": {}, 
+                "type": "not_empty"
+              }, 
+              "category": {
+                "ang": "Name of 2nd Condition"
+              }, 
+              "destination": "e34e75c6-1963-4592-8c0c-0d452b7c7562", 
+              "uuid": "b7352857-260b-4dcb-b233-24e1def2293d", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "7bf19927-7bfe-4811-9b56-1de4330a74e4", 
+              "uuid": "be75a336-5fb9-4497-a29a-08480048714b", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "second_condition_name", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 479, 
+          "x": 476, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 2
+          }
+        }, 
+        {
+          "uuid": "e34e75c6-1963-4592-8c0c-0d452b7c7562", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "2nd Condition deaths"
+              }, 
+              "destination": "4a00c444-aeaf-4780-83e0-2b4fc29f301a", 
+              "uuid": "9fe7c82a-8126-4c59-a7d0-f528ed6966c0", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "7bf19927-7bfe-4811-9b56-1de4330a74e4", 
+              "uuid": "5370b257-4d75-4221-a7ac-d0c843b8a8e3", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "second_condition_deaths", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 622, 
+          "x": 482, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 3
+          }
+        }, 
+        {
+          "uuid": "4a00c444-aeaf-4780-83e0-2b4fc29f301a", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "test": {}, 
+                "type": "not_empty"
+              }, 
+              "category": {
+                "ang": "Name of 3rd condition"
+              }, 
+              "destination": "2b04ea92-fc0b-489f-8027-4d42a67d046b", 
+              "uuid": "769b1841-3999-47ce-90ef-ba69dbf01f8a", 
+              "destination_type": "R"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "56e1f49d-6c34-4425-9a59-9bee39d355c0", 
+              "uuid": "f740e637-46fe-4599-8b1a-5dfdb97a58cb", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "third_condition_name", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 752, 
+          "x": 472, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 4
+          }
+        }, 
+        {
+          "uuid": "2b04ea92-fc0b-489f-8027-4d42a67d046b", 
+          "webhook_action": null, 
+          "rules": [
+            {
+              "test": {
+                "type": "number"
+              }, 
+              "category": {
+                "ang": "3rd Condition Deaths"
+              }, 
+              "destination": "90d14a80-134a-4b58-9e2b-3560fbcaee7e", 
+              "uuid": "db9be0c0-75d7-4cbf-a869-a640da137342", 
+              "destination_type": "A"
+            }, 
+            {
+              "test": {
+                "test": "true", 
+                "type": "true"
+              }, 
+              "category": {
+                "ang": "Other"
+              }, 
+              "destination": "56e1f49d-6c34-4425-9a59-9bee39d355c0", 
+              "uuid": "9047c989-bca6-46aa-870a-2d5190116aef", 
+              "destination_type": "A"
+            }
+          ], 
+          "webhook": null, 
+          "ruleset_type": "form_field", 
+          "label": "third_condition_deaths", 
+          "operand": "@flow.fields", 
+          "finished_key": null, 
+          "response_type": "", 
+          "y": 868, 
+          "x": 488, 
+          "config": {
+            "field_delimiter": ".", 
+            "field_index": 5
+          }
+        }
+      ], 
+      "metadata": {
+        "expires": 0, 
+        "revision": 39, 
+        "id": 10, 
+        "name": "Other Conditions - Deaths", 
+        "saved_on": "2015-12-29T16:07:31.798596Z"
+      }
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "Other Conditions - Deaths", 
+        "id": 10
+      }, 
+      "groups": [], 
+      "keyword": "epd", 
+      "channel": null
+    }
+  ]
+}
