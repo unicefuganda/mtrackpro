@@ -4,12 +4,11 @@
 __author__ = "Sekiwere Samuel"
 
 import web
-# import psycopg2
-# import psycopg2.extras
+import psycopg2
+import psycopg2.extras
 import logging
 import requests
 import json
-import parsedatetime
 import datetime
 import re
 from settings import conf, MAPPING, XML_TEMPLATE, DEFAULT_DATA_VALUES  # conf is a dictionary with our settings
@@ -28,7 +27,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
     filename='/var/log/webhooks/access.log',
     filemode='a')
-cal = parsedatetime.Calendar()
+
 # Helper functions
 
 API_URL = 'http://localhost:8000/api/v1/'
@@ -41,6 +40,17 @@ KEYWORDS_DATA_LENGTH = {
     'cases': 16,
     'death': 18,
 }
+
+# connection to queue DB for DHIS2 requests
+conn = psycopg2.connect(getattr(
+    conf, "queuing_db_connection_string", "dbname=skytools user=postgres"))
+
+cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+cur.execute("SELECT id FROM servers WHERE name = 'dhis2'")
+res = cur.fetchone()
+serverid = None
+if res:
+    serverid = res['id']
 
 
 def get_reporting_week(date):
@@ -161,6 +171,19 @@ def push_reporters():
                 print res.text
 
 
+def queue_submission(serverid, post_xml, year, week):
+    """Queue request and return True if successfully queued"""
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    try:
+        cur.execute(
+            "INSERT INTO requests (serverid, request_body, week, year) "
+            "VALUES(%s, %s, %s, %s)", (serverid, post_xml, week, year))
+        conn.commit()
+    except:
+        return False
+    return True
+
+
 class Cases:
     def GET(self):
         return json.dumps({"message": "0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0"})
@@ -235,15 +258,18 @@ class Dhis2Queue:
 
             if dataValues:
                 args_dict = {
-                    'complete_date': datetime.datetime.now().strftime("YYYY-MM-DD"),
+                    'complete_date': datetime.datetime.now().strftime("%Y-%m-%d"),
                     'period': get_reporting_week(datetime.datetime.now()),
                     'orgunit': params.facilityuuid,
                     'datavales': dataValues
                 }
 
                 post_xml = XML_TEMPLATE % args_dict
+                year, week = tuple(args_dict['period'].split('W'))
                 print post_xml
                 # now ready to queue to DB for pushing to DHIS2
+                resp = queue_submission(serverid, post_xml, year, week)
+                print "Resp:", resp
 
         return json.dumps({"status": "success"})
 
