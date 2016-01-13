@@ -1,7 +1,8 @@
 conf = {
     # 'api_token': '4b61f2fb79d095ad428c1850ae091f1e993a4b4e',
     'api_token': 'c8cde9dbbdda6f544018e9321d017e909b28ec51',
-    'default_api_uri': 'http://localhost:8000/api/v1/contacts.json'
+    'default_api_uri': 'http://localhost:8000/api/v1/contacts.json',
+    'queuing_db_connection_string': "dbname=skytools user=postgres",
 }
 
 MAPPING = {
@@ -327,7 +328,7 @@ XML_TEMPLATE = """
 <dataValueSet xmlns="http://dhis2.org/schema/dxf/2.0" dataSet="V1kJRs8CtW4" completeDate="%(complete_date)s" period="%(period)s" orgUnitIdScheme="uuid" orgUnit="%(orgunit)s">
 <dataValues>
     %(datavales)s
-</dataValue>
+</dataValues>
 </dataValueSet>
 """
 
