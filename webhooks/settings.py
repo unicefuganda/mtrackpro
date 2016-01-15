@@ -36,7 +36,7 @@ MAPPING = {
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'JPVp2yLEimL'
     },
-    'arv_screening': {
+    'arv_hiv_screening_test_kits': {
         'descr': 'HIV screening test kits',
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'kteQimFQJom'
@@ -227,27 +227,27 @@ MAPPING = {
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'w3mO7SZdbb8'
     },
-    'mat_mic_neg_treated': {
+    'mat_microscopy_neg_treated': {
         'descr': 'Microscopy negative cases treated',
         'dhis2_combo_id': 'TTwU8Bv4fKm',
         'dhis2_uuid': 'ZgPtploqq0L'
     },
-    'mat_mic_pos': {
+    'mat_microscopy_positive': {
         'descr': 'Microscopy positive cases',
         'dhis2_combo_id': '3rYpFjLrrYa',
         'dhis2_uuid': 'KPmTI3TGwZw'
     },
-    'mat_mic_pos_treated': {
+    'mat_microscopy_pos_treated': {
         'descr': 'Microscopy positive cases treated',
         'dhis2_combo_id': 'vp37EZVg3xG',
         'dhis2_uuid': 'ZgPtploqq0L'
     },
-    'mat_mic_tested': {
+    'mat_microscopy_tested': {
         'descr': 'Microscopy tested cases',
         'dhis2_combo_id': 't8Jv78lnSbU',
         'dhis2_uuid': 'KPmTI3TGwZw'
     },
-    'mat_not_treated': {
+    'mat_not_tested_treated': {
         'descr': 'Not tested cases treated',
         'dhis2_combo_id': 'w16OBdsg4b7',
         'dhis2_uuid': 'ZgPtploqq0L'
@@ -257,7 +257,7 @@ MAPPING = {
         'dhis2_combo_id': 'NfJyyb1eBaw',
         'dhis2_uuid': 'ZgPtploqq0L'
     },
-    'mat_rdt_pos': {
+    'mat_rdt_positive': {
         'descr': 'RDT positive cases',
         'dhis2_combo_id': 'PfdPCxOoiBj',
         'dhis2_uuid': 'KPmTI3TGwZw'
@@ -272,27 +272,22 @@ MAPPING = {
         'dhis2_combo_id': 'kcXY5cWAOsB',
         'dhis2_uuid': 'KPmTI3TGwZw'
     },
-    'mat_sus_ma': {
+    'mat_suspected_malaria': {
         'descr': 'Suspected Malaria (fever)',
         'dhis2_combo_id': '3W3d2AqT4Aq',
         'dhis2_uuid': 'KPmTI3TGwZw'
     },
-    'slug': {
-        'descr': 'description',
-        'dhis2_combo_id': 'dhis2_combo_id',
-        'dhis2_uuid': 'dhis2_uuid'
-    },
-    'tra_act': {
+    'tra_act_tablets': {
         'descr': 'ACT (Tablets)',
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'Ju0Cann41Ul'
     },
-    'tra_amox': {
+    'tra_amoxcilline': {
         'descr': 'Amoxcilline',
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'tFrWdigZ4oo'
     },
-    'tra_depo': {
+    'tra_depo_provera': {
         'descr': 'Depo - Provera',
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'v6ACxYNPIvm'
@@ -302,12 +297,12 @@ MAPPING = {
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'fX6A6NO18pY'
     },
-    'tra_iv': {
+    'tra_iv_artesunate': {
         'descr': 'IV artesunate',
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'O2OrXuZo4hB'
     },
-    'tra_me': {
+    'tra_measles_vaccine': {
         'descr': 'Measles Vaccine',
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'DgeykDdSLzI'
@@ -317,7 +312,7 @@ MAPPING = {
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'zmimiDOJwaf'
     },
-    'tra_rdt': {
+    'tra_rdt_malaria': {
         'descr': 'Malaria RDTs',
         'dhis2_combo_id': 'gGhClrV5odI',
         'dhis2_uuid': 'CzsKMvQDwMV'
