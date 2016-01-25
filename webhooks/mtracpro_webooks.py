@@ -59,8 +59,7 @@ def get_reporting_week(date):
     """
     offset_from_last_sunday = date.weekday() + 1
     last_sunday = date - datetime.timedelta(days=offset_from_last_sunday)
-    year = last_sunday.year
-    weeknum = int(last_sunday.strftime("%W")) + 1
+    year, weeknum, _ = last_sunday.isocalendar()
     return "%sW%d" % (year, weeknum)
 
 
